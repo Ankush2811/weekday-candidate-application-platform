@@ -18,7 +18,6 @@ const ReferralButton = () => {
                     {/* Container for AccountCircle icons, emphasizing the referral feature */}
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: '10px' }}>
                         <AccountCircleIcon style={{ fontSize: '2rem' }} />
-                        <AccountCircleIcon style={{ fontSize: '2rem' }} />
                     </div>
                     {/* Typography for button text, styled for visibility and non-capitalized text */}
                     <Typography style={{ fontSize: '0.8rem', color: 'white', textTransform: 'none' }}>

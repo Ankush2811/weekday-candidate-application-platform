@@ -1,8 +1,8 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import RootLayout from "./Components/RootLayout";
 import { Provider } from "react-redux";
 import store from "./reduxStore/store";
+import JobList from './components/jobList'
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Provider store={store}>
           <Routes>
-            <Route path="/" element={<RootLayout />} />
+            <Route path="/" element={<JobList />} />
           </Routes>
         </Provider>
       </BrowserRouter>

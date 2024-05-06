@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
-import { getCandidateDetails } from "../Store/CandidateSlice";
+import { getCandidateDetails } from "../reduxStore/CandidateSlice";
 import StatusCode from "../utils/StatusCode";
 import Box from "@mui/material/Box";
 import Filter from "./Filter";
@@ -13,7 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
-const Details = () => {
+const JobList = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
 
@@ -98,4 +98,4 @@ const Details = () => {
   );
 };
 
-export default Details;
+export default JobList;
