@@ -10,6 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const JobList = () => {
   const [showModal, setShowModal] = useState(false);
@@ -42,7 +43,11 @@ const JobList = () => {
   const handleCloseModal = () => setShowModal(false);
 
   if (status === StatusCode.LOADING && page === 1) {
-    return <p>Loading...</p>;
+    return (
+      <p>
+        <CircularProgress color="success" />
+      </p>
+    );
   }
 
   if (status === StatusCode.ERROR) {
@@ -66,8 +71,14 @@ const JobList = () => {
           dataLength={filteredCandidates.length}
           next={fetchMoreData}
           hasMore={filteredCandidates?.length % limit === 0}
-          loader={filteredCandidates.length === 0 && <p>Loading items...</p>}
-          endMessage={<p>No more items</p>}
+          loader={
+            filteredCandidates.length === 0 && (
+              <p>
+                <CircularProgress color="success" />
+              </p>
+            )
+          }
+          endMessage={<p>Tada !! You have reached the end.</p>}
         >
           <Grid container spacing={3}>
             {filteredCandidates.length > 0 ? (

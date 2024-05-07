@@ -10,6 +10,7 @@ import {
   OutlinedInput,
   Chip,
   Grid,
+  Divider,
 } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
@@ -129,6 +130,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
         <Grid item xs={12} sm={6} md={2}>
           <FormControl fullWidth>
             <InputLabel id="role-select-label">Job Role</InputLabel>
+
             <Select
               labelId="role-select-label"
               id="role-select"

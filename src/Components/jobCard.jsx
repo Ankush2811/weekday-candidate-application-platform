@@ -3,8 +3,7 @@ import { Card, CardContent, Typography, Box } from "@mui/material";
 import HourglassFullTwoToneIcon from "@mui/icons-material/HourglassFullTwoTone";
 import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
 import JobInfo from "./jobInfo";
-import ApplyButton from "../shared/buttons/applyButton";
-import ReferralButton from "../shared/buttons/referralButton";
+import ApplyButton from "./applyButton";
 import ScrollableComponent from "../shared/description/scrollableComponent";
 
 const JobCard = ({ candidate }) => {
@@ -62,13 +61,11 @@ const JobCard = ({ candidate }) => {
             Minimum Experience:
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {candidate.minExp ? `${candidate.minExp} years` : "1+ years"}
+            {candidate.minExp }
           </Typography>
         </Box>
 
-        {/* Apply and Referral buttons */}
         <ApplyButton />
-        <ReferralButton />
       </CardContent>
     </Card>
   );
