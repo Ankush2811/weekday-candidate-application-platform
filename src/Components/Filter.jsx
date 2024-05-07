@@ -264,6 +264,42 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             </Select>
           </FormControl>
         </Grid>
+        <Grid item xs={12} sm={6} md={2}>
+          <FormControl fullWidth>
+            <InputLabel id="remote-location-select-label">
+              Remote/All
+            </InputLabel>
+            <Select
+              labelId="location-select-label"
+              id="location-select"
+              value={filters.location}
+              name="location"
+              onChange={handleChange}
+              input={
+                <OutlinedInput id="select-multiple-chip" label="Location" />
+              }
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected}
+                </Box>
+              )}
+            >
+              <MenuItem value="">
+                Clear
+                <ClearOutlinedIcon
+                  style={{
+                    marginLeft: "5rem",
+                    fontSize: "1.5rem",
+                    color: "red",
+                  }}
+                />{" "}
+                <Divider />
+              </MenuItem>
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="remote">Remote</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
       </Grid>
     </Box>
   );
