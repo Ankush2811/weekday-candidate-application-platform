@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Chip from "@mui/material/Chip";
-import Grid from "@mui/material/Grid";
-import { TextField } from "@mui/material";
+import {
+  TextField,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  OutlinedInput,
+  Chip,
+  Grid,
+} from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,64 +24,71 @@ const MenuProps = {
 };
 
 const Filter = ({ candidateDetails, setFilteredCandidates }) => {
-  console.log("candidateDetails", candidateDetails);
   const [searchInput, setSearchInput] = useState("");
   const [filters, setFilters] = useState({
     role: [],
     location: [],
-    experience: [],
-    minSalary: [],
+    experience: "",
+    minSalary: "",
     companyName: "",
   });
 
+  useEffect(() => {
+    filterCandidates(filters);
+  }, [filters]);
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters((prevFilters) => ({ ...prevFilters, [filterName]: value }));
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
-    }));
-    filterCandidates({ ...filters, [name]: value });
+    handleFilterChange(name, value);
+  };
+
+  const handleSearchInputChange = (e) => {
+    const inputValue = e.target.value.toLowerCase();
+    setSearchInput(inputValue);
+    const filteredData = candidateDetails.filter((candidate) =>
+      candidate.companyName.toLowerCase().includes(inputValue)
+    );
+    setFilteredCandidates(filteredData);
   };
 
   const filterCandidates = (filters) => {
     let filteredData = [...candidateDetails];
 
-    // Filter by role
     if (filters.role.length > 0) {
       filteredData = filteredData.filter((candidate) =>
-        filters.role.includes(candidate.jobRole)
+        filters.role.includes(candidate.jobRole.toLowerCase())
       );
     }
 
-    // Filter by location
     if (filters.location.length > 0) {
       filteredData = filteredData.filter((candidate) =>
-        filters.location.includes(candidate.location)
+        filters.location.includes(candidate.location.toLowerCase())
       );
     }
 
-    // Filter by experience
-    if (filters.experience.length > 0) {
-      console.log(filters.experience);
+    if (filters.experience !== "") {
+      const expRange = parseInt(filters.experience);
       filteredData = filteredData.filter((candidate) => {
-        if (filters.experience === "0-2") {
-          return candidate.minExp >= 0 && candidate.minExp <= 2;
-        } else if (filters.experience === "3-5") {
-          return candidate.minExp >= 3 && candidate.minExp <= 5;
+        if (expRange === 5) {
+          return candidate.minExp >= 5;
         } else {
-          return candidate.minExp > 5;
+          return (
+            candidate.minExp >= expRange && candidate.minExp < expRange + 1
+          );
         }
       });
     }
 
-    // Filter by minimum salary
-    if (filters.minSalary.length > 0) {
+    if (filters.minSalary !== "") {
       filteredData = filteredData.filter(
         (candidate) => parseInt(filters.minSalary) <= candidate.minJdSalary
       );
     }
 
-    // Filter by companyName (search filter)
     if (filters.companyName !== "") {
       filteredData = filteredData.filter((candidate) =>
         candidate.companyName
@@ -91,9 +100,32 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
     setFilteredCandidates(filteredData);
   };
 
+  const rolesList = Array.from(
+    new Set(
+      candidateDetails.map((candidate) => candidate.jobRole.toLowerCase())
+    )
+  )
+    .sort()
+    .map((role) => ({ label: role }));
+
   return (
     <Box p={2}>
-      <Grid container spacing={2} justifyContent="center" alignItems="flex-start">
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        alignItems="flex-start"
+      >
+        <Grid item xs={12} sm={6} md={2}>
+          <TextField
+            fullWidth
+            type="text"
+            label="Company Name"
+            name="companyName"
+            value={searchInput}
+            onChange={handleSearchInputChange}
+          />
+        </Grid>
         <Grid item xs={12} sm={6} md={2}>
           <FormControl fullWidth>
             <InputLabel id="role-select-label">Job Role</InputLabel>
@@ -104,7 +136,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
               value={filters.role}
               name="role"
               onChange={handleChange}
-              input={<OutlinedInput id="select-multiple-chip" label="ROLE" />}
+              input={<OutlinedInput id="select-multiple-chip" label="Role" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   {selected.map((value) => (
@@ -114,9 +146,11 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
               )}
               MenuProps={MenuProps}
             >
-              <MenuItem value="frontend">Frontend</MenuItem>
-              <MenuItem value="backend">Backend</MenuItem>
-              <MenuItem value="ios">iOS</MenuItem>
+              {rolesList.map((role) => (
+                <MenuItem key={role.label} value={role.label}>
+                  {role.label}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -126,7 +160,6 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             <Select
               labelId="location-select-label"
               id="location-select"
-              multiple
               value={filters.location}
               name="location"
               onChange={handleChange}
@@ -135,16 +168,15 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
               }
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
+                  {selected}
                 </Box>
               )}
               MenuProps={MenuProps}
             >
-              <MenuItem value="delhi ncr">Delhi NCR</MenuItem>
+              <MenuItem value="delhi ncr">Delhi</MenuItem>
               <MenuItem value="mumbai">Mumbai</MenuItem>
               <MenuItem value="chennai">Chennai</MenuItem>
+              <MenuItem value="bangalore">Bangalore</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -162,14 +194,16 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
               }
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  <Chip key={selected} label={selected} />
+                  {selected}
                 </Box>
               )}
               MenuProps={MenuProps}
             >
-              <MenuItem value="0-2">0-2 Years</MenuItem>
-              <MenuItem value="3-5">3-5 Years</MenuItem>
-              <MenuItem value="5+">5+ Years</MenuItem>
+              <MenuItem value="1">1 Year</MenuItem>
+              <MenuItem value="2">2 Years</MenuItem>
+              <MenuItem value="3">3 Years</MenuItem>
+              <MenuItem value="4">4 Years</MenuItem>
+              <MenuItem value="5">5+ Years</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -189,34 +223,26 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                 />
               }
               renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  <Chip key={selected} label={selected} />
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  {selected}
                 </Box>
               )}
             >
-              <MenuItem value="25">25 USD</MenuItem>
-              <MenuItem value="50">50 USD</MenuItem>
-              <MenuItem value="75">75 USD</MenuItem>
+              <MenuItem value="10k USD">10k USD</MenuItem>
+              <MenuItem value="20k USD">20k USD</MenuItem>
+              <MenuItem value="30k USD">30k USD</MenuItem>
+              <MenuItem value="40k USD">40k USD</MenuItem>
+              <MenuItem value="50k+ USD">50k+ USD</MenuItem>
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={6} md={2}>
-          <TextField
-            fullWidth
-            type="text"
-            label="Company Name"
-            name="Search"
-            value={searchInput}
-            onChange={(e) => {
-              const inputValue = e.target.value.toLowerCase();
-              setSearchInput(inputValue);
-              const filteredData = candidateDetails.filter((candidate) =>
-                candidate.companyName.toLowerCase().includes(inputValue)
-              );
-              setFilteredCandidates(filteredData);
-            }}
-          />
-        </Grid>
+        {/* Add more Grid items here if needed */}
       </Grid>
     </Box>
   );
