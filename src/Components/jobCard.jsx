@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import HourglassFullTwoToneIcon from "@mui/icons-material/HourglassFullTwoTone";
-import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
+import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
 import BoltIcon from "@mui/icons-material/Bolt";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import JobInfo from "./jobInfo";
@@ -20,19 +20,6 @@ const JobCard = ({ candidate }) => {
 
   const handleDialogToggle = () => {
     setOpenDialog((prev) => !prev);
-  };
-
-  const getEstimatedSalary = () => {
-    const { minJdSalary, maxJdSalary, salaryCurrencyCode } = candidate;
-    if (minJdSalary && maxJdSalary) {
-      return `${minJdSalary}k - ${maxJdSalary}k ${salaryCurrencyCode}`;
-    } else if (minJdSalary) {
-      return `${minJdSalary}k ${salaryCurrencyCode} +`;
-    } else if (maxJdSalary) {
-      return `up to ${maxJdSalary}k ${salaryCurrencyCode}`;
-    } else {
-      return "As per industry standards";
-    }
   };
 
   return (
@@ -78,14 +65,23 @@ const JobCard = ({ candidate }) => {
             color="text.primary"
             sx={{ marginRight: 1 }}
           >
-            Estimated Salary: {getEstimatedSalary()}
+            Estimated Salary:{" "}
+            {candidate?.minJdSalary && candidate?.maxJdSalary
+              ? `${candidate?.minJdSalary}k - ${candidate?.maxJdSalary}k ${candidate?.salaryCurrencyCode}`
+              : candidate?.minJdSalary
+              ? `${candidate?.minJdSalary}k ${candidate?.salaryCurrencyCode} +`
+              : candidate?.maxJdSalary
+              ? `up to ${candidate?.maxJdSalary}k ${candidate?.salaryCurrencyCode}`
+              : "As per industry standards"}
           </Typography>
-          <VerifiedOutlinedIcon sx={{ fontSize: "1.5rem" }} />
+          <CheckCircleOutlinedIcon
+            sx={{ fontSize: "1.5rem", color: "green" }}
+          />
         </Box>
 
         <Typography
           variant="body2"
-          sx={{ fontWeight: "bold", marginBottom: 1, marginRight: 24 }}
+          sx={{ fontWeight: "bold", marginBottom: 1, textAlign: "left" }}
         >
           About Company:
         </Typography>

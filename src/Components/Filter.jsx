@@ -10,19 +10,7 @@ import {
   OutlinedInput,
   Chip,
   Grid,
-  Divider,
 } from "@mui/material";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 const Filter = ({ candidateDetails, setFilteredCandidates }) => {
   const [searchInput, setSearchInput] = useState("");
@@ -130,7 +118,6 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
         <Grid item xs={12} sm={6} md={2}>
           <FormControl fullWidth>
             <InputLabel id="role-select-label">Job Role</InputLabel>
-
             <Select
               labelId="role-select-label"
               id="role-select"
@@ -141,12 +128,13 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
               input={<OutlinedInput id="select-multiple-chip" label="Role" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
+                  {selected.map((value, index) => (
+                    <React.Fragment key={value}>
+                      {index > 0 && ", "} {value}
+                    </React.Fragment>
                   ))}
                 </Box>
               )}
-              MenuProps={MenuProps}
             >
               {rolesList.map((role) => (
                 <MenuItem key={role.label} value={role.label}>
@@ -162,6 +150,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             <Select
               labelId="location-select-label"
               id="location-select"
+              multiple
               value={filters.location}
               name="location"
               onChange={handleChange}
@@ -173,7 +162,6 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                   {selected}
                 </Box>
               )}
-              MenuProps={MenuProps}
             >
               <MenuItem value="delhi ncr">Delhi</MenuItem>
               <MenuItem value="mumbai">Mumbai</MenuItem>
@@ -199,7 +187,6 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                   {selected}
                 </Box>
               )}
-              MenuProps={MenuProps}
             >
               <MenuItem value="1">1 Year</MenuItem>
               <MenuItem value="2">2 Years</MenuItem>
@@ -244,7 +231,6 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             </Select>
           </FormControl>
         </Grid>
-        {/* Add more Grid items here if needed */}
       </Grid>
     </Box>
   );
