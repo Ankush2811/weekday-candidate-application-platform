@@ -11,6 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 const JobList = () => {
   const [showModal, setShowModal] = useState(false);
@@ -60,46 +61,48 @@ const JobList = () => {
   }
 
   return (
-    <div>
-      <Filter
-        setFilteredCandidates={setFilteredCandidates}
-        candidateDetails={candidateDetails}
-      />
-
+    <Box p={2} sx={{ paddingLeft: "5%", paddingRight: "5%" }}>
       <div>
-        <InfiniteScroll
-          dataLength={filteredCandidates.length}
-          next={fetchMoreData}
-          hasMore={filteredCandidates?.length % limit === 0}
-          loader={
-            filteredCandidates.length === 0 && (
-              <p>
-                <CircularProgress color="success" />
-              </p>
-            )
-          }
-          endMessage={<p>Tada !! You have reached the end.</p>}
-        >
-          <Grid container spacing={3}>
-            {filteredCandidates.length > 0 ? (
-              filteredCandidates.map((candidate) => (
-                <Grid item xs={12} sm={6} md={4} key={candidate.id}>
-                  <JobCard candidate={candidate} />
-                </Grid>
-              ))
-            ) : (
-              <div>No data Available</div>
-            )}
-          </Grid>
-        </InfiniteScroll>
+        <Filter
+          setFilteredCandidates={setFilteredCandidates}
+          candidateDetails={candidateDetails}
+        />
+
+        <div>
+          <InfiniteScroll
+            dataLength={filteredCandidates.length}
+            next={fetchMoreData}
+            hasMore={filteredCandidates?.length % limit === 0}
+            loader={
+              filteredCandidates.length === 0 && (
+                <p>
+                  <CircularProgress color="success" />
+                </p>
+              )
+            }
+            endMessage={<p>Tada !! You have reached the end.</p>}
+          >
+            <Grid container spacing={3}>
+              {filteredCandidates.length > 0 ? (
+                filteredCandidates.map((candidate) => (
+                  <Grid item xs={12} sm={6} md={4} key={candidate.id}>
+                    <JobCard candidate={candidate} />
+                  </Grid>
+                ))
+              ) : (
+                <div>No data Available</div>
+              )}
+            </Grid>
+          </InfiniteScroll>
+        </div>
+        <Dialog open={showModal} onClose={handleCloseModal}>
+          <DialogContent>
+            <h3 className="text-center">Job Description</h3>
+            {selectedCandidate && selectedCandidate.jobDetailsFromCompany}
+          </DialogContent>
+        </Dialog>
       </div>
-      <Dialog open={showModal} onClose={handleCloseModal}>
-        <DialogContent>
-          <h3 className="text-center">Job Description</h3>
-          {selectedCandidate && selectedCandidate.jobDetailsFromCompany}
-        </DialogContent>
-      </Dialog>
-    </div>
+    </Box>
   );
 };
 

@@ -6,11 +6,11 @@ const JobInfo = ({ companyName, jobRole, location, imageUrl }) => {
   return (
     <Box sx={{ mt: 2, display: "flex", flexDirection: "column" }}>
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 1 }}>
-        <Box sx={{ width: 100, height: 100, marginRight: 2 }}>
+        <Box sx={{ width: 75, height: 75, marginRight: 2 }}>
           <img
             src={imageUrl}
             alt="Company Logo"
-            style={{ width: "100%", borderRadius: 3 }}
+            style={{ width: "100%", borderRadius: 4 }}
           />
         </Box>
         <Box
@@ -21,7 +21,7 @@ const JobInfo = ({ companyName, jobRole, location, imageUrl }) => {
           }}
         >
           <Typography
-            variant="h5"
+            variant="h6"
             sx={{
               fontWeight: "bold",
               color: "#7f8280",
