@@ -15,7 +15,7 @@ import BoltIcon from "@mui/icons-material/Bolt";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import JobInfo from "./jobInfo";
 
-const JobCard = ({ candidate }) => {
+const JobCard = ({ job }) => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleDialogToggle = () => {
@@ -47,15 +47,15 @@ const JobCard = ({ candidate }) => {
             sx={{ fontSize: 18, marginRight: 1, marginLeft: 1 }}
           />
           <Typography variant="body2" color="text.secondary">
-            Posted {candidate.maxJdSalary % 30} days ago
+            Posted {job.maxJdSalary % 30} days ago
           </Typography>
         </Box>
 
         <JobInfo
-          companyName={candidate.companyName}
-          location={candidate.location}
-          jobRole={candidate.jobRole}
-          imageUrl={candidate.logoUrl}
+          companyName={job.companyName}
+          location={job.location}
+          jobRole={job.jobRole}
+          imageUrl={job.logoUrl}
         />
 
         <Box sx={{ display: "flex", alignItems: "center", marginBottom: 1 }}>
@@ -66,12 +66,12 @@ const JobCard = ({ candidate }) => {
             sx={{ marginRight: 1 }}
           >
             Estimated Salary:{" "}
-            {candidate?.minJdSalary && candidate?.maxJdSalary
-              ? `${candidate?.minJdSalary}k - ${candidate?.maxJdSalary}k ${candidate?.salaryCurrencyCode}`
-              : candidate?.minJdSalary
-              ? `${candidate?.minJdSalary}k ${candidate?.salaryCurrencyCode} +`
-              : candidate?.maxJdSalary
-              ? `up to ${candidate?.maxJdSalary}k ${candidate?.salaryCurrencyCode}`
+            {job?.minJdSalary && job?.maxJdSalary
+              ? `${job?.minJdSalary}k - ${job?.maxJdSalary}k ${job?.salaryCurrencyCode}`
+              : job?.minJdSalary
+              ? `${job?.minJdSalary}k ${job?.salaryCurrencyCode} +`
+              : job?.maxJdSalary
+              ? `up to ${job?.maxJdSalary}k ${job?.salaryCurrencyCode}`
               : "As per industry standards"}
           </Typography>
           <CheckCircleOutlinedIcon
@@ -95,8 +95,8 @@ const JobCard = ({ candidate }) => {
             textAlign: "left",
           }}
         >
-          {candidate.jobDetailsFromCompany}
-          {candidate.jobDetailsFromCompany.length > 100 && (
+          {job.jobDetailsFromCompany}
+          {job.jobDetailsFromCompany.length > 100 && (
             <Box
               sx={{
                 position: "absolute",
@@ -108,7 +108,7 @@ const JobCard = ({ candidate }) => {
             />
           )}
         </Typography>
-        {candidate.jobDetailsFromCompany.length > 100 && (
+        {job.jobDetailsFromCompany.length > 100 && (
           <Typography
             onClick={handleDialogToggle}
             sx={{
@@ -133,7 +133,7 @@ const JobCard = ({ candidate }) => {
             Minimum Experience:
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {candidate.minExp}
+            {job.minExp}
           </Typography>
         </Box>
 
@@ -217,9 +217,7 @@ const JobCard = ({ candidate }) => {
       <Dialog open={openDialog} onClose={handleDialogToggle}>
         <DialogTitle>Job Description</DialogTitle>
         <DialogContent>
-          <Typography variant="body2">
-            {candidate.jobDetailsFromCompany}
-          </Typography>
+          <Typography variant="body2">{job.jobDetailsFromCompany}</Typography>
         </DialogContent>
       </Dialog>
     </Card>

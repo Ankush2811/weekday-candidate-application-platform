@@ -39,8 +39,8 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
   const handleSearchInputChange = (e) => {
     const inputValue = e.target.value.toLowerCase();
     setSearchInput(inputValue);
-    const filteredData = candidateDetails.filter((candidate) =>
-      candidate.companyName.toLowerCase().includes(inputValue)
+    const filteredData = candidateDetails.filter((job) =>
+      job.companyName.toLowerCase().includes(inputValue)
     );
     setFilteredCandidates(filteredData);
   };
@@ -49,39 +49,37 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
     let filteredData = [...candidateDetails];
 
     if (filters.role.length > 0) {
-      filteredData = filteredData.filter((candidate) =>
-        filters.role.includes(candidate.jobRole.toLowerCase())
+      filteredData = filteredData.filter((job) =>
+        filters.role.includes(job.jobRole.toLowerCase())
       );
     }
 
     if (filters.location.length > 0) {
-      filteredData = filteredData.filter((candidate) =>
-        filters.location.includes(candidate.location.toLowerCase())
+      filteredData = filteredData.filter((job) =>
+        filters.location.includes(job.location.toLowerCase())
       );
     }
 
     if (filters.experience !== "") {
       const expRange = parseInt(filters.experience);
-      filteredData = filteredData.filter((candidate) => {
+      filteredData = filteredData.filter((job) => {
         if (expRange === 5) {
-          return candidate.minExp >= 5;
+          return job.minExp >= 5;
         } else {
-          return (
-            candidate.minExp >= expRange && candidate.minExp < expRange + 1
-          );
+          return job.minExp >= expRange && job.minExp < expRange + 1;
         }
       });
     }
 
     if (filters.minSalary !== "") {
       filteredData = filteredData.filter(
-        (candidate) => parseInt(filters.minSalary) <= candidate.minJdSalary
+        (job) => parseInt(filters.minSalary) <= job.minJdSalary
       );
     }
 
     if (filters.companyName !== "") {
-      filteredData = filteredData.filter((candidate) =>
-        candidate.companyName
+      filteredData = filteredData.filter((job) =>
+        job.companyName
           .toLowerCase()
           .includes(filters.companyName.toLowerCase())
       );
@@ -91,9 +89,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
   };
 
   const rolesList = Array.from(
-    new Set(
-      candidateDetails.map((candidate) => candidate.jobRole.toLowerCase())
-    )
+    new Set(candidateDetails.map((job) => job.jobRole.toLowerCase()))
   )
     .sort()
     .map((role) => ({ label: role }));
