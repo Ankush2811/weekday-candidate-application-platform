@@ -8,9 +8,10 @@ import {
   Select,
   MenuItem,
   OutlinedInput,
-  Chip,
+  Divider,
   Grid,
 } from "@mui/material";
+import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 
 const Filter = ({ candidateDetails, setFilteredCandidates }) => {
   const [searchInput, setSearchInput] = useState("");
@@ -150,7 +151,6 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             <Select
               labelId="location-select-label"
               id="location-select"
-              multiple
               value={filters.location}
               name="location"
               onChange={handleChange}
@@ -163,6 +163,17 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                 </Box>
               )}
             >
+              <MenuItem value="">
+                Clear
+                <ClearOutlinedIcon
+                  style={{
+                    marginLeft: "5rem",
+                    fontSize: "1.5rem",
+                    color: "red",
+                  }}
+                />{" "}
+                <Divider />
+              </MenuItem>
               <MenuItem value="delhi ncr">Delhi</MenuItem>
               <MenuItem value="mumbai">Mumbai</MenuItem>
               <MenuItem value="chennai">Chennai</MenuItem>
@@ -188,6 +199,17 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                 </Box>
               )}
             >
+              <MenuItem value="">
+                Clear
+                <ClearOutlinedIcon
+                  style={{
+                    marginLeft: "5rem",
+                    fontSize: "1.5rem",
+                    color: "red",
+                  }}
+                />{" "}
+                <Divider />
+              </MenuItem>
               <MenuItem value="1">1 Year</MenuItem>
               <MenuItem value="2">2 Years</MenuItem>
               <MenuItem value="3">3 Years</MenuItem>
@@ -223,6 +245,17 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                 </Box>
               )}
             >
+              <MenuItem value="">
+                Clear
+                <ClearOutlinedIcon
+                  style={{
+                    marginLeft: "5rem",
+                    fontSize: "1.5rem",
+                    color: "red",
+                  }}
+                />{" "}
+                <Divider />
+              </MenuItem>
               <MenuItem value="10k USD">10k USD</MenuItem>
               <MenuItem value="20k USD">20k USD</MenuItem>
               <MenuItem value="30k USD">30k USD</MenuItem>
