@@ -110,6 +110,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             name="companyName"
             value={searchInput}
             onChange={handleSearchInputChange}
+            placeholder="Search..."
           />
         </Grid>
         <Grid item xs={12} sm={6} md={2}>
