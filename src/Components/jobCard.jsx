@@ -11,24 +11,17 @@ import {
 } from "@mui/material";
 import HourglassFullTwoToneIcon from "@mui/icons-material/HourglassFullTwoTone";
 import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
-import JobInfo from "./jobInfo";
-import ApplyButton from "./applyButton";
 import BoltIcon from "@mui/icons-material/Bolt";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import JobInfo from "./jobInfo";
 
 const JobCard = ({ candidate }) => {
-  const [expanded, setExpanded] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(true);
-    setOpenDialog(true);
+  const handleDialogToggle = () => {
+    setOpenDialog((prev) => !prev);
   };
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  // Function to calculate estimated salary
   const getEstimatedSalary = () => {
     const { minJdSalary, maxJdSalary, salaryCurrencyCode } = candidate;
     if (minJdSalary && maxJdSalary) {
@@ -52,7 +45,6 @@ const JobCard = ({ candidate }) => {
       }}
     >
       <CardContent>
-        {/* Posted day */}
         <Box
           sx={{
             display: "flex",
@@ -61,17 +53,17 @@ const JobCard = ({ candidate }) => {
             border: "2px solid #d7dbd8",
             borderRadius: 4,
             width: "60%",
-            pl: 1,
             boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <HourglassFullTwoToneIcon sx={{ fontSize: 18, marginRight: 1 }} />
+          <HourglassFullTwoToneIcon
+            sx={{ fontSize: 18, marginRight: 1, marginLeft: 1 }}
+          />
           <Typography variant="body2" color="text.secondary">
             Posted {candidate.maxJdSalary % 30} days ago
           </Typography>
         </Box>
 
-        {/* Job information */}
         <JobInfo
           companyName={candidate.companyName}
           location={candidate.location}
@@ -79,7 +71,6 @@ const JobCard = ({ candidate }) => {
           imageUrl={candidate.logoUrl}
         />
 
-        {/* Estimated salary */}
         <Box sx={{ display: "flex", alignItems: "center", marginBottom: 1 }}>
           <Typography
             variant="body1"
@@ -92,7 +83,6 @@ const JobCard = ({ candidate }) => {
           <VerifiedOutlinedIcon sx={{ fontSize: "1.5rem" }} />
         </Box>
 
-        {/* About company */}
         <Typography
           variant="body2"
           sx={{ fontWeight: "bold", marginBottom: 1, marginRight: 24 }}
@@ -106,6 +96,7 @@ const JobCard = ({ candidate }) => {
             position: "relative",
             overflow: "hidden",
             maxHeight: "100px",
+            textAlign: "left",
           }}
         >
           {candidate.jobDetailsFromCompany}
@@ -123,7 +114,7 @@ const JobCard = ({ candidate }) => {
         </Typography>
         {candidate.jobDetailsFromCompany.length > 100 && (
           <Typography
-            onClick={handleExpandClick}
+            onClick={handleDialogToggle}
             sx={{
               fontSize: "14px",
               cursor: "pointer",
@@ -136,7 +127,6 @@ const JobCard = ({ candidate }) => {
           </Typography>
         )}
 
-        {/* Minimum experience */}
         <Box sx={{ display: "flex", alignItems: "center", marginBottom: 1 }}>
           <Typography
             variant="body2"
@@ -150,6 +140,7 @@ const JobCard = ({ candidate }) => {
             {candidate.minExp}
           </Typography>
         </Box>
+
         <div
           style={{
             display: "flex",
@@ -178,9 +169,56 @@ const JobCard = ({ candidate }) => {
             </Typography>
           </Button>
         </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "10px",
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            style={{
+              backgroundColor: "#3e13eb",
+              width: "100%",
+              borderRadius: "10px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: "10px",
+                }}
+              >
+                <AccountCircleIcon style={{ fontSize: "2rem" }} />
+              </div>
+              <Typography
+                style={{
+                  fontSize: "0.9rem",
+                  color: "white",
+                  fontWeight: "bold",
+                  textTransform: "none",
+                }}
+              >
+                Ask for Referral
+              </Typography>
+            </div>
+          </Button>
+        </div>
       </CardContent>
 
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
+      <Dialog open={openDialog} onClose={handleDialogToggle}>
         <DialogTitle>Job Description</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
