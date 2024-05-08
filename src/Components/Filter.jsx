@@ -13,7 +13,9 @@ import {
 } from "@mui/material";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 
+// Component for filtering candidate details
 const Filter = ({ candidateDetails, setFilteredCandidates }) => {
+  // State variables for search input and filters
   const [searchInput, setSearchInput] = useState("");
   const [filters, setFilters] = useState({
     role: [],
@@ -23,19 +25,23 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
     companyName: "",
   });
 
+  // Effect to filter candidates when filters change
   useEffect(() => {
     filterCandidates(filters);
   }, [filters]);
 
+  // Function to handle changes in filter values
   const handleFilterChange = (filterName, value) => {
     setFilters((prevFilters) => ({ ...prevFilters, [filterName]: value }));
   };
 
+  // Function to handle generic input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
     handleFilterChange(name, value);
   };
 
+  // Function to handle search input change
   const handleSearchInputChange = (e) => {
     const inputValue = e.target.value.toLowerCase();
     setSearchInput(inputValue);
@@ -45,6 +51,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
     setFilteredCandidates(filteredData);
   };
 
+  // Function to filter candidates based on filter values
   const filterCandidates = (filters) => {
     let filteredData = [...candidateDetails];
 
@@ -88,6 +95,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
     setFilteredCandidates(filteredData);
   };
 
+  // Extract unique roles and sort alphabetically
   const rolesList = Array.from(
     new Set(candidateDetails.map((job) => job.jobRole.toLowerCase()))
   )
@@ -102,6 +110,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
         justifyContent="center"
         alignItems="flex-start"
       >
+        {/* Search by company name */}
         <Grid item xs={12} sm={6} md={2}>
           <TextField
             fullWidth
@@ -113,6 +122,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             placeholder="Search..."
           />
         </Grid>
+        {/* Filter by job role */}
         <Grid item xs={12} sm={6} md={2}>
           <FormControl fullWidth>
             <InputLabel id="role-select-label">Job Role</InputLabel>
@@ -134,6 +144,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                 </Box>
               )}
             >
+              {/* Render job role options */}
               {rolesList.map((role) => (
                 <MenuItem key={role.label} value={role.label}>
                   {role.label}
@@ -142,6 +153,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             </Select>
           </FormControl>
         </Grid>
+        {/* Filter by location */}
         <Grid item xs={12} sm={6} md={2}>
           <FormControl fullWidth>
             <InputLabel id="location-select-label">Location</InputLabel>
@@ -160,6 +172,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                 </Box>
               )}
             >
+              {/* Render location options */}
               <MenuItem value="">
                 Clear
                 <ClearOutlinedIcon
@@ -178,6 +191,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             </Select>
           </FormControl>
         </Grid>
+        {/* Filter by experience */}
         <Grid item xs={12} sm={6} md={2}>
           <FormControl fullWidth>
             <InputLabel id="experience-select-label">Experience</InputLabel>
@@ -196,6 +210,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                 </Box>
               )}
             >
+              {/* Render experience options */}
               <MenuItem value="">
                 Clear
                 <ClearOutlinedIcon
@@ -215,6 +230,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             </Select>
           </FormControl>
         </Grid>
+        {/* Filter by minimum salary */}
         <Grid item xs={12} sm={6} md={2}>
           <FormControl fullWidth>
             <InputLabel id="minSalary-select-label">Minimum Salary</InputLabel>
@@ -242,6 +258,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                 </Box>
               )}
             >
+              {/* Render minimum salary options */}
               <MenuItem value="">
                 Clear
                 <ClearOutlinedIcon
@@ -261,6 +278,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
             </Select>
           </FormControl>
         </Grid>
+        {/* Filter by remote or all */}
         <Grid item xs={12} sm={6} md={2}>
           <FormControl fullWidth>
             <InputLabel id="remote-location-select-label">
@@ -281,6 +299,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
                 </Box>
               )}
             >
+              {/* Render remote/all options */}
               <MenuItem value="">
                 Clear
                 <ClearOutlinedIcon
@@ -302,6 +321,7 @@ const Filter = ({ candidateDetails, setFilteredCandidates }) => {
   );
 };
 
+// Prop types for Filter component
 Filter.propTypes = {
   candidateDetails: PropTypes.array.isRequired,
   setFilteredCandidates: PropTypes.func.isRequired,

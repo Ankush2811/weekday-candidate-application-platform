@@ -15,9 +15,12 @@ import BoltIcon from "@mui/icons-material/Bolt";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import JobInfo from "./jobInfo";
 
+// Component for rendering individual job cards
 const JobCard = ({ job }) => {
+  // State to manage dialog visibility
   const [openDialog, setOpenDialog] = useState(false);
 
+  // Toggle dialog visibility
   const handleDialogToggle = () => {
     setOpenDialog((prev) => !prev);
   };
@@ -32,6 +35,7 @@ const JobCard = ({ job }) => {
       }}
     >
       <CardContent>
+        {/* Posted time */}
         <Box
           sx={{
             display: "flex",
@@ -51,6 +55,7 @@ const JobCard = ({ job }) => {
           </Typography>
         </Box>
 
+        {/* Job information */}
         <JobInfo
           companyName={job.companyName}
           location={job.location}
@@ -58,6 +63,7 @@ const JobCard = ({ job }) => {
           imageUrl={job.logoUrl}
         />
 
+        {/* Estimated salary */}
         <Box sx={{ display: "flex", alignItems: "center", marginBottom: 1 }}>
           <Typography
             variant="body1"
@@ -79,6 +85,7 @@ const JobCard = ({ job }) => {
           />
         </Box>
 
+        {/* Company description */}
         <Typography
           variant="body2"
           sx={{ fontWeight: "bold", marginBottom: 1, textAlign: "left" }}
@@ -108,6 +115,7 @@ const JobCard = ({ job }) => {
             />
           )}
         </Typography>
+        {/* Show more button for long descriptions */}
         {job.jobDetailsFromCompany.length > 100 && (
           <Typography
             onClick={handleDialogToggle}
@@ -123,6 +131,7 @@ const JobCard = ({ job }) => {
           </Typography>
         )}
 
+        {/* Minimum experience */}
         <Box sx={{ display: "flex", alignItems: "center", marginBottom: 1 }}>
           <Typography
             variant="body2"
@@ -137,6 +146,7 @@ const JobCard = ({ job }) => {
           </Typography>
         </Box>
 
+        {/* Easy apply button */}
         <div
           style={{
             display: "flex",
@@ -166,6 +176,7 @@ const JobCard = ({ job }) => {
           </Button>
         </div>
 
+        {/* Ask for referral button */}
         <div
           style={{
             display: "flex",
@@ -214,6 +225,7 @@ const JobCard = ({ job }) => {
         </div>
       </CardContent>
 
+      {/* Dialog for showing full job description */}
       <Dialog open={openDialog} onClose={handleDialogToggle}>
         <DialogTitle>Job Description</DialogTitle>
         <DialogContent>
