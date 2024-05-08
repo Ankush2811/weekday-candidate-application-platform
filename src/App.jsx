@@ -1,5 +1,5 @@
 import "./App.css";
-import JobDetails from "./components/JobDetails";
+import JobDetails from "./Components/JobDetails";
 import { Provider } from "react-redux";
 import store from "./reduxStore/store";
 
