@@ -1,13 +1,13 @@
 import "./App.css";
+import JobDetails from "./components/JobDetails";
 import { Provider } from "react-redux";
 import store from "./reduxStore/store";
-import JobList from "./components/JobList";
 
 function App() {
   return (
     <div className="App">
       <Provider store={store}>
-        <JobList />
+        <JobDetails />
       </Provider>
     </div>
   );

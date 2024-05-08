@@ -14,7 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 // Component for displaying a list of jobs
-const JobList = () => {
+const JobDetails = () => {
   // State for managing modal visibility and selected candidate
   const [showModal, setShowModal] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -123,4 +123,4 @@ const JobList = () => {
   );
 };
 
-export default JobList;
+export default JobDetails;
